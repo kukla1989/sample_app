@@ -9,7 +9,7 @@ class StaticPageControllerTest < ActionDispatch::IntegrationTest
   test "should get home from root" do
     get root_url
     assert_response :success
-    assert_select "title", "Home #{@base_title}"
+    assert_select "title", "Ruby on Rails Tutorial Sample App"
   end
   
   
