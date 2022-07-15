@@ -71,7 +71,8 @@ class UserTest < ActiveSupport::TestCase
     assert_not @user.valid?
   end
 
-  test "password should be at least 6 character"
-  @user.password = @user.password_confirmation = ' ' * 5
-  assert_not @user.valid?
+  test "password should be at least 6 character" do
+     @user.password = @user.password_confirmation = ' ' * 5
+     assert_not @user.valid?
+  end
 end

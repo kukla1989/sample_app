@@ -22,6 +22,7 @@ end
 
 group :development do
   gem "web-console", "4.2.0"
+  gem "byebug"
 end
 
 group :test do
