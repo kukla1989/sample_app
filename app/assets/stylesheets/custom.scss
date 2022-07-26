@@ -67,30 +67,11 @@ p {
 }
 
 /*--------header---drop-down content ----------*/
-.dropdown {
-  position: relative;
-  display: inline-block;
-  margin-top: 12px;
-}
-
-.dropdown-content {
-  list-style-type: none;
-  display: none;
-  position: absolute;
-  width: auto;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  background-color: #222222;
-  margin: 0px 10px;
-  padding: 0px 10px;
-
-}
-
-.dropdown:hover .dropdown-content {
+.dropdown-menu.active {
   display: block;
 }
-.account{
-  color: #999999;
-}
+
+
 
 /* ---------------footer--------------------- */
 footer {

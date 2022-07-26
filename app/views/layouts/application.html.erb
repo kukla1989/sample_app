@@ -2,7 +2,9 @@
 <html>
   <head>
     <title><%= full_title(yield(:title)) %></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <%= render "layouts/rails_default" %>
+    <%= javascript_importmap_tags %>
   </head>
   <body>
   <div class="container">
