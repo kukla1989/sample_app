@@ -4,40 +4,57 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
   def setup
     @user = users(:roma)
   end
+end
 
-
-  test "login with valid email/invalid password" do
-    get login_path
-    assert_template 'sessions/new'
-    post login_path, params: { session: { email:    "roma@gmail.com",
+class InvalidInformationTest < UsersLoginTest
+  def setup
+    super
+    #invalid password
+    post login_path, params: { session: { email:    @user.email,
                                           password: "invalid" } }
+    assert_not is_logged_in?
     assert_response :unprocessable_entity
     assert_template 'sessions/new'
-    assert_not flash.empty?
-    get root_path
-    assert flash.empty?
   end
 
 
-  test "flash after wrong login not appear on next page" do
+  test "login path" do
     get login_path
     assert_template 'sessions/new'
-    post login_path, params: { session: {email: 'sfda@sf',
-                                         password: 'sadfasdfsadf'} }
-    assert_template 'sessions/new'
+  end
+
+
+  test "flash disappear after go to next page(invalid information)" do
     assert_not flash.empty?
     get root_path
     assert flash.empty?
   end
+end
 
-  test "login with valid information" do
+
+class ValidLoginTest <UsersLoginTest
+  def setup
+    super
     post login_path, params: {session: {email: @user.email,
                                         password: 'password'}}
+    assert is_logged_in?
     assert_redirected_to @user
     follow_redirect!
     assert_template 'users/show'
-    #assert_select "a[href=?]", login_path, count: 0
+    assert_select "a[href=?]", login_path, count: 0
     assert_select "a[href=?]", logout_path
     assert_select "a[href=?]", user_path(@user)
   end
+
+
+  test "log out" do
+    delete logout_path
+    assert_response :see_other
+    assert_not is_logged_in?
+    assert_redirected_to root_url
+    follow_redirect!
+    assert_select "a[href=?]", login_path
+    assert_select "a[href=?]", logout_path, count: 0
+  end
 end
+
