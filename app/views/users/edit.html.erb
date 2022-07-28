@@ -1,7 +1,9 @@
 <% provide(:title, "Edit user") %>
-<h3>Update your profile</h3>
+<% provide(:button_tag, "Update") %>
+
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
+    <h3>Update your profile</h3>
     <%= render "shared/user_form" %>
     <div class="gravatar_edit">
       <%= gravatar_for @user %>
