@@ -1,6 +1,7 @@
 ENV["RAILS_ENV"] ||= "test"
 require_relative "../config/environment"
 require "rails/test_help"
+include SessionsHelper
 
 class ActiveSupport::TestCase
   # Run tests in parallel with specified workers
@@ -11,6 +12,10 @@ class ActiveSupport::TestCase
 
   def is_logged_in?
     !session[:user_id].nil?
+  end
+
+  def log_in_as(user, password)
+    post login_path, params: {session: {email:user.email, password: password}}
   end
   # Add more helper methods to be used by all tests here...
 end

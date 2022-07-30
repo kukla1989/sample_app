@@ -1,6 +1,10 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 roma:
   name: roma
-  email: roma@gmail.com
+  email: roma11@gmail.com
+  password_digest: <%= User.digest('password') %>
+inna:
+  name: Inna
+  email: duchess@example.gov
   password_digest: <%= User.digest('password') %>
 

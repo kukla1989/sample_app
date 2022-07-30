@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  before_action :logged_in_user, only: [:edit, :update]
+  before_action :correct_user, only: [:edit, :update]
 
   def new
     @user = User.new
@@ -21,13 +23,12 @@ class UsersController < ApplicationController
 
 
   def edit
-    @user = User.find(params[:id])
   end
 
   def update
-    @user = User.find(params[:id])
     if @user.update(user_params)
-
+      flash[:success] = "profile updated"
+      redirect_to @user
     else
       render 'edit', status: :unprocessable_entity
     end
@@ -37,5 +38,17 @@ class UsersController < ApplicationController
   def user_params
     params.require(:user).permit(:name, :email, :password,
                                  :password_confirmation)
+  end
+
+  def logged_in_user
+    unless logged_in?
+      flash[:danger] = "Please log in"
+      redirect_to login_path, status: :see_other
+    end
+  end
+
+  def correct_user
+    @user = User.find(params[:id])
+    redirect_to root_path, status: :see_other unless @user == current_user
   end
 end
