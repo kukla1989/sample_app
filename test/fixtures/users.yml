@@ -3,6 +3,7 @@ roma:
   name: roma
   email: roma11@gmail.com
   password_digest: <%= User.digest('password') %>
+  admin: true
 
 inna:
   name: Inna
