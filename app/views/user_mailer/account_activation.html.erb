@@ -1,6 +1,4 @@
-<h1>User#account_activation</h1>
 
-<p> Hi <%= @user.name %> !</p>
+<h3> Hi <%= @user.name %> !</h3>
 <%= link_to "Activate your account", edit_account_activation_url(@user.activation_token,
-                                                                 email: @user.email) %>                                                                 ) %>
-
+                                                                 email: @user.email) %>
