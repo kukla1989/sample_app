@@ -32,32 +32,20 @@ class InvalidInformationTest < UsersLoginTest
 end
 
 
-class ValidLoginTest <UsersLoginTest
+class ValidLogin < UsersLoginTest
   def setup
     super
+    log_in_as(@user)
   end
+end
 
-
-  test "log out" do
-    log_in_as @user
+class ValidLoginTest < ValidLogin
+  test "valid login" do
     assert is_logged_in?
     assert_redirected_to @user
-    follow_redirect!
-    assert_template 'users/show'
-    assert_select "a[href=?]", login_path, count: 0
-    assert_select "a[href=?]", logout_path
-    assert_select "a[href=?]", user_path(@user)
-    delete logout_path
-    assert_response :see_other
-    assert_not is_logged_in?
-    assert_redirected_to root_url
-    follow_redirect!
-    assert_select "a[href=?]", login_path
-    assert_select "a[href=?]", logout_path, count: 0
   end
 
   test "login with remember" do
-    log_in_as @user
     assert_not cookies[:user_id].blank?
     assert_equal cookies['remember_token'], assigns(:user).remember_token
   end
@@ -67,6 +55,41 @@ class ValidLoginTest <UsersLoginTest
     # log in again but without remember
     log_in_as(@user, remember_me: '0')
     assert cookies[:user_id].blank?
+  end
+
+  test "redirect after login" do
+    follow_redirect!
+    assert_template 'users/show'
+    assert_select "a[href=?]", login_path, count: 0
+    assert_select "a[href=?]", logout_path
+    assert_select "a[href=?]", user_path(@user)
+  end
+end
+
+class LogOut < ValidLogin
+
+  def setup
+    super
+    delete logout_path
+  end
+end
+
+class LogOutTest < LogOut
+
+  test "successful log out" do
+    assert_not is_logged_in?
+  end
+
+  test "redirect after logout" do
+    follow_redirect!
+    assert_select "a[href=?]", login_path
+    assert_select "a[href=?]", logout_path,      count: 0
+    assert_select "a[href=?]", user_path(@user), count: 0
+  end
+
+  test "should still work after logout in second window" do
+    delete logout_path
+    assert_redirected_to root_url
   end
 end
 
