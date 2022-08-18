@@ -1,4 +1,8 @@
 class PasswordResetsController < ApplicationController
+  before_action :find_user,        only: [:edit, :update]
+  before_action :valid_user,       only: [:edit, :update]
+  before_action :check_expiration, only: [:edit, :update]
+
   def new
   end
 
@@ -17,4 +21,43 @@ class PasswordResetsController < ApplicationController
 
   def edit
   end
+
+  def update
+    if params[:user][:password].empty?
+      @user.errors.add(:password, "cant be blank")
+      render 'edit', status: :unprocessable_entity
+    elsif @user.update(user_params)
+      forget @user
+      reset_session
+      log_in @user
+      flash[:success] = "Congratulation! Your password was reset"
+      redirect_to @user
+    else
+      render 'edit', status: :unprocessable_entity
+    end
+  end
+
+  private
+
+  def user_params
+    params.require(:user).permit(:password, :password_confirmation)
+  end
+
+  def find_user
+    @user = User.find_by(email: params[:email])
+  end
+
+  def valid_user
+    unless @user && @user.activated? && @user.authenticated?(:reset, params[:id])
+      redirect_to root_url
+    end
+  end
+
+  def check_expiration
+    if @user.reset_sent_at < 2.hours.ago
+      flash[:danger] = "your activated link expired"
+      redirect_to new_password_reset_path
+    end
+  end
+
 end

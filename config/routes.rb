@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
-  resource :password_resets, only: [:new, :create, :edit, :update]
   resources :account_activations, only: [:edit]
+  resources :password_resets, only: [:new, :create, :edit, :update]
   root 'static_page#home'
   resources :users
   get '/signup', to: 'users#new'
