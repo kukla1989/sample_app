@@ -9,6 +9,14 @@ class UserTest < ActiveSupport::TestCase
                      password: "foobar", password_confirmation: "foobar")
   end
 
+  test "depended micropost should be also destroy" do
+    @user.save
+    @user.microposts.create!(content: "some content")
+    assert_difference 'Micropost.count', -1 do
+      @user.destroy
+    end
+  end
+
   test "@user should be valid" do
     assert @user.valid?
   end

@@ -1,1 +1,14 @@
+user_third:
+  content: "something"
+  created_at: <%= 1.day.ago %>
+  user: roma
 
+user_second:
+  content: "smth"
+  created_at: <%= 1.hour.ago %>
+  user: roma
+
+most_recent:
+  content: "here is content"
+  created_at: <%= Time.zone.now %>
+  user: roma
