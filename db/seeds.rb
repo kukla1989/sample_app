@@ -18,3 +18,12 @@ User.create!(name: "roma",
                activated: true,
                activated_at: Time.zone.now)
 end
+
+#create 50 microposts for first 6 users
+users = User.order(:created_at).take(6)
+50.times do
+  content = Faker::Lorem.sentence(word_count: 7)
+  users.each { |user| user.microposts.create!(content: content) }
+end
+
+

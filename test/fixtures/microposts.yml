@@ -12,3 +12,10 @@ most_recent:
   content: "here is content"
   created_at: <%= Time.zone.now %>
   user: roma
+
+<% 30.times do |n| %>
+micropost_<%= n %>:
+  content: <%= Faker::Lorem.sentence(word_count: 4)%>
+  created_at: <%= 33.days.ago %>
+  user: roma
+<% end %>
