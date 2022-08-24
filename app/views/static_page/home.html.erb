@@ -19,6 +19,7 @@
   <ol class="microposts">
     <%= render @feed_items %>
   </ol>
-  <%= will_paginate @feed_items %>
+  <%= will_paginate @feed_items,
+                    params: { controller: :static_page, action: :home } %>
 <% end %>
 
