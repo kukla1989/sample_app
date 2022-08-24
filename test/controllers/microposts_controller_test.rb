@@ -19,4 +19,14 @@ class MicropostsControllerTest < ActionDispatch::IntegrationTest
     assert_response :see_other
     assert_redirected_to login_path
   end
+
+  test "another user cant delete your post" do
+    log_in_as users(:inna)
+    micropost = microposts(:roma)
+    assert_no_difference 'Micropost.count' do
+      delete micropost_path(micropost)
+    end
+    assert_response :see_other
+    assert_redirected_to root_url
+  end
 end

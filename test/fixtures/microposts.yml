@@ -1,3 +1,8 @@
+roma:
+  content: "here is content"
+  created_at: <%= 1.day.ago %>
+  user: roma
+
 user_third:
   content: "something"
   created_at: <%= 1.day.ago %>
@@ -13,9 +18,27 @@ most_recent:
   created_at: <%= Time.zone.now %>
   user: roma
 
-<% 30.times do |n| %>
+inna:
+  content: "some content from inna"
+  created_at: <%= 2.years.ago %>
+  user: inna
+
+inna2:
+  content: "some content from inna"
+  created_at: <%= 2.years.ago %>
+  user: inna
+
+
+<% 33.times do |n| %>
 micropost_<%= n %>:
   content: <%= Faker::Lorem.sentence(word_count: 4)%>
   created_at: <%= 33.days.ago %>
   user: roma
 <% end %>
+  
+  <% 33.times do |n| %>
+micropost_inna<%= n %>:
+  content: <%= Faker::Lorem.sentence(word_count: 4)%>
+  created_at: <%= 33.days.ago %>
+  user: inna
+  <% end %>
