@@ -20,6 +20,7 @@ gem "bootstrap-will_paginate", "1.0.0"
 gem "active_storage_validations", "0.9.8"
 gem "image_processing"
 
+
 group :development, :test do
   gem "sqlite3", "1.4.2"
   gem "debug",   "1.5.0", platforms: %i[ mri mingw x64_mingw ]
@@ -43,6 +44,7 @@ end
 
 group :production do
   gem "pg", "1.3.5"
+  gem "aws-sdk-s3", "1.114.0", require: false
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem.
