@@ -54,3 +54,22 @@ class MicropostInterfaceTest < MicropostsInterface
   end
 end
 
+class ImageUploadTest < MicropostsInterface
+
+  test "should have input file field for images" do
+    get root_url
+    assert_select "input[type=file]"
+  end
+
+  test "should be able to attach image" do
+    img = fixture_file_upload("test/fixtures/sun.jpg", "image/jpeg")
+    content = "unique content"
+    assert_difference 'Micropost.count', 1 do
+      post microposts_path, params: {micropost: {content: content, image: img}}
+    end
+    assert assigns(:micropost).image.attached?
+    follow_redirect!
+    assert_match content, response.body
+  end
+end
+
