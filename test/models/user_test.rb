@@ -1,9 +1,7 @@
 require "test_helper"
 
 class UserTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+
   def setup
     @user = User.new(name: "tmp", email: "tmp@gmail.com",
                      password: "foobar", password_confirmation: "foobar")
@@ -94,6 +92,7 @@ class UserTest < ActiveSupport::TestCase
     assert_not roma.following?(inna)
     roma.follow(inna)
     assert roma.following?(inna)
+    assert inna.followers.include?(roma)
     roma.unfollow(inna)
     assert_not roma.following?(inna)
   end
