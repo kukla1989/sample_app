@@ -8,6 +8,12 @@ class UsersProfileTest < ActionDispatch::IntegrationTest
     @microposts = assigns(:microposts)
   end
 
+  test "stats should be in profile page" do
+    assert_select 'div.stats', count: 1
+    assert_select '#followers', @user.followers.count.to_s
+    assert_select '#following', @user.following.count.to_s
+  end
+
   test "profile display" do
     assert_template 'users/show'
     assert_select 'h1', text: @user.name

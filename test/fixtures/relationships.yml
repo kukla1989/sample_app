@@ -1,0 +1,15 @@
+one:
+  follower: roma
+  followed: someone
+
+two:
+  follower: roma
+  followed: sergiy
+
+three:
+  follower: someone
+  followed: roma
+
+four:
+  follower: larisa
+  followed: roma

@@ -1,0 +1,29 @@
+<div class="row">
+  <div class="col-md-4">
+    <section class="user-info">
+      <h1><%= @user.name %></h1>
+      <%= link_to "My profile", @user %>
+      <%= gravatar_for(@user) %>
+      <span>Microposts: <%= @user.microposts.count %></span>
+    </section>
+    <section class="stats">
+      <%= render 'shared/stats' %>
+      <% if @users.any? %>
+        <% @users.each do |user| %>
+          <%= link_to gravatar_for(user, size: 30) %>
+        <% end %>
+      <% end %>
+    </section>
+  </div>
+  <div class="col-md-8">
+    <h3><%= @title %></h3>
+    <% if @users.any? %>
+      <ul class="users follow">
+        <%=render @users %>
+      </ul>
+    <% else %>
+      <%= @title == 'following' ? "#{@user.name} following nobody" : "nobody following #{@user.name}" %>
+    <% end %>
+    <%= will_paginate %>
+  </div>
+</div>
