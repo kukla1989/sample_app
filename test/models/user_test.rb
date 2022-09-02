@@ -97,6 +97,22 @@ class UserTest < ActiveSupport::TestCase
     assert_not roma.following?(inna)
   end
 
+  test "user feed should include post from following, self and not unfollowed" do
+    roma = users(:roma)
+    someone = users(:someone)
+    larisa = users(:larisa)
+    #posts from following user
+    someone.microposts.each do |post_following|
+      assert roma.feed.include? post_following
+    end
+    #self posts
+    roma.microposts.each do |post_self|
+      assert roma.feed.include? post_self
+    end
+    #posts from unfollowed user that should not appear in feed
+    larisa.microposts.each do |post_unfollowed|
+      assert_not roma.feed.include? post_unfollowed
+    end
 
-
+  end
 end

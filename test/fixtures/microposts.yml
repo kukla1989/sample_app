@@ -3,6 +3,16 @@ roma:
   created_at: <%= 1.day.ago %>
   user: roma
 
+someone:
+  content: "here is content"
+  created_at: <%= 1.day.ago %>
+  user: someone
+
+larisa:
+  content: "here is content"
+  created_at: <%= 1.day.ago %>
+  user: larisa
+
 user_third:
   content: "something"
   created_at: <%= 1.day.ago %>
